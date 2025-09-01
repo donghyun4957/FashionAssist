@@ -16,7 +16,7 @@ class FashionAssist():
 
     def input_voice(self):
 
-        image = input("사진을 첨부하시겠습니까? (파일 경로 입력, 없으면 엔터) : ")
+        image = input("사진을 첨부하시겠습니까? (파일명 입력, 없으면 엔터) : ")
         if image.strip() == "":
             file = None
         else:
@@ -32,8 +32,9 @@ class FashionAssist():
 
         with self.microphone as source:
             print('말씀하세요.')
-            audio = self.recognizer.listen(source, timeout=None, phrase_time_limit=10)
-            txt = self.recognizer.recognize_google(audio, language='ko-KR')
+            # audio = self.recognizer.listen(source, timeout=None, phrase_time_limit=10)
+            # txt = self.recognizer.recognize_google(audio, language='ko-KR')
+            txt = '오늘 패션 어때?'
             print(txt)
         return file, txt
 
