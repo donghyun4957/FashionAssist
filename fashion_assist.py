@@ -28,13 +28,12 @@ class FashionAssist():
                 file = self.encode_image(file)
 
         self.recognizer.energy_threshold = 400
-        self.recognizer.pause_threshold = 1.5
+        self.recognizer.pause_threshold = 1
 
         with self.microphone as source:
             print('말씀하세요.')
-            # audio = self.recognizer.listen(source, timeout=None, phrase_time_limit=10)
-            # txt = self.recognizer.recognize_google(audio, language='ko-KR')
-            txt = '오늘 패션 어때?'
+            audio = self.recognizer.listen(source, timeout=5, phrase_time_limit=30)
+            txt = self.recognizer.recognize_google(audio, language='ko-KR')
             print(txt)
         return file, txt
 
@@ -76,5 +75,12 @@ class FashionAssist():
         except Exception as e:
             return f"Error during API request: {e}"
         
+    def speak(self, text: str, file_path: str = "responses/response.mp3", voice: str = "echo"):
+        with self.client.audio.speech.with_streaming_response.create(
+            model="tts-1",
+            voice=voice,
+            input=text
+        ) as response:
+            response.stream_to_file(file_path)
 
 
