@@ -32,7 +32,7 @@ class FashionAssist():
 
         with self.microphone as source:
             print('말씀하세요.')
-            audio = self.recognizer.listen(source, timeout=5, phrase_time_limit=30)
+            audio = self.recognizer.listen(source, timeout=5, phrase_time_limit=50)
             txt = self.recognizer.recognize_google(audio, language='ko-KR')
             print(txt)
         return file, txt
@@ -61,11 +61,11 @@ class FashionAssist():
                 response_format={
                     "type": "text"
                 },
-                temperature=1.0,        # 대답 창의성
-                max_tokens=2048,        # 응답 최대  토큰 수
-                top_p=1,                # 사용할 상위 누적 확률
-                frequency_penalty=0,    # 토큰 사용 빈도수에 대한 불이익
-                presence_penalty=0      # 토큰 재사용에 대한 불이익
+                temperature=1.0,
+                max_tokens=2048,
+                top_p=1,
+                frequency_penalty=0,
+                presence_penalty=0
             )
             answer = response.choices[0].message.content
             self.chat_history.append({"role": "assistant", "content": answer})
